@@ -3,8 +3,9 @@ import requests
 from datetime import datetime
 from pytz import timezone
 
-india = timezone("Asia/Kolkata")
-now = datetime.now(india)
+ist = timezone("Asia/Kolkata")
+now = datetime.now(ist)
+
 app = Flask(__name__)
 
 # Google Form and Webhook URLs
