@@ -13,10 +13,11 @@
           <input type="checkbox" name="names" value="{{ name }}"> {{ name }}
         </label><br>
       {% endfor %}
-      <button type="submit">
-        Submit
-        <span id="spinner" class="spinner" style="display: none;"></span>
-      </button>
+     <button type="submit" id="submit-btn">
+  <span id="btn-text">Submit</span>
+  <span id="spinner" class="spinner" style="display: none;"></span>
+</button>
+
     </form>
   </div>
 
@@ -38,29 +39,32 @@
       }
     };
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-      // Disable button and show spinner
-      submitButton.disabled = true;
-      submitButton.firstChild.textContent = "Submitting";
-      spinner.style.display = "inline-block";
+  const btnText = document.getElementById("btn-text");
+  const spinner = document.getElementById("spinner");
 
-      const checkboxes = document.querySelectorAll('input[name="names"]:checked');
-      const names = Array.from(checkboxes).map(cb => cb.value);
+  // Show spinner and change text
+  submitButton.disabled = true;
+  btnText.textContent = "Submitting";
+  spinner.style.display = "inline-block";
 
-      const res = await fetch("/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ names })
-      });
+  const checkboxes = document.querySelectorAll('input[name="names"]:checked');
+  const names = Array.from(checkboxes).map(cb => cb.value);
 
-      const data = await res.json();
-      localStorage.setItem("submissionResults", JSON.stringify(data));
+  const res = await fetch("/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ names })
+  });
 
-      // Redirect after submission
-      window.location.href = "/thanks";
-    });
+  const data = await res.json();
+  localStorage.setItem("submissionResults", JSON.stringify(data));
+
+  window.location.href = "/thanks";
+});
+
   </script>
 </body>
 </html>

@@ -10,8 +10,8 @@ now_ist = now_utc.astimezone(pytz.timezone("Asia/Kolkata"))
 app = Flask(__name__)
 
 # Google Form and Webhook URLs
-form_url = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdzpcp9FuxahnbdyBJMEZY6VNkieVAJoSJi_W8F5QDA2WWV2A/formResponse"
-webhook_url = "https://script.google.com/macros/s/AKfycbzkGyMtCEuJTDclad333-_mpbDkxORXsFcyVHcdJevikCplO6UtN7kGXvyViMdGnS_j/exec"
+form_url = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdkTf1WS5b8oosWrwAtqkAa_W10blt05LB5cjQqmJZ2W0z4MA/formResponse"
+webhook_url = "https://script.google.com/macros/s/AKfycbzfQgeLXCBJtVCXa9AP-ncv_OyySypygv1GW7thsEkgKRIq8ixFBXhtq4CEl6G4XZWZMg/exec"
 
 # Users
 user_list = {
@@ -41,9 +41,9 @@ def submit_lunch():
             continue
 
         form_data = {
-            "entry.624210802": name,
-            "entry.1158356341": emp_id,
-            "entry.769903343": "Yes"
+            "entry.736127819": name,
+            "entry.1569168623": emp_id,
+            "entry.700798306": "Yes"
         }
 
         try:
