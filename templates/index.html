@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lunch Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Select Names for Lunch</h2>
+    <form id="lunch-form">
+      {% for name in users %}
+        <label>
+          <input type="checkbox" name="names" value="{{ name }}"> {{ name }}
+        </label><br>
+      {% endfor %}
+      <button type="submit">
+  Submit
+  <span id="spinner" class="spinner" style="display: none;"></span>
+</button>
+
+    </form>
+  </div>
+
+<script>
+  const form = document.getElementById("lunch-form");
+  const submitButton = document.querySelector("#lunch-form button");
+  const spinner = document.getElementById("spinner");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    // Disable button and show spinner + text
+    submitButton.disabled = true;
+    submitButton.firstChild.textContent = "Submitting";
+    spinner.style.display = "inline-block";
+
+    const checkboxes = document.querySelectorAll('input[name="names"]:checked');
+    const names = Array.from(checkboxes).map(cb => cb.value);
+
+    const res = await fetch("/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ names })
+    });
+
+    const data = await res.json();
+    localStorage.setItem("submissionResults", JSON.stringify(data));
+
+    // Redirect after submission
+    window.location.href = "/thanks";
+  });
+</script>
+
+
+</body>
+</html>

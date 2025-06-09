@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submission Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>✅ Lunch Form Submitted</h2>
+    <ul id="result-list"></ul>
+    <a href="/">⬅ Back</a>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("submissionResults"));
+    const resultList = document.getElementById("result-list");
+
+    data.forEach(item => {
+      const li = document.createElement("li");
+      if (item.form === 200 && item.sheet.toLowerCase().includes("success")) {
+        li.textContent = `✅ Submitted for ${item.name}`;
+        li.style.color = "green";
+      } else {
+        li.textContent = `❌ Failed for ${item.name}`;
+        li.style.color = "red";
+      }
+      resultList.appendChild(li);
+    });
+
+    // Optional: clear results after 1 view
+    localStorage.removeItem("submissionResults");
+  </script>
+</body>
+</html>
