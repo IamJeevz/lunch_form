@@ -82,6 +82,11 @@ def submit_lunch():
 def thanks():
     return render_template("thanks.html")
 
+@app.after_request
+def add_header(response):
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
