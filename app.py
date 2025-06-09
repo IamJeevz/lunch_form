@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 from datetime import datetime
+from pytz import timezone
 
+india = timezone("Asia/Kolkata")
+now = datetime.now(india)
 app = Flask(__name__)
 
 # Google Form and Webhook URLs
