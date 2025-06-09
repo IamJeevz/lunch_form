@@ -14,43 +14,53 @@
         </label><br>
       {% endfor %}
       <button type="submit">
-  Submit
-  <span id="spinner" class="spinner" style="display: none;"></span>
-</button>
-
+        Submit
+        <span id="spinner" class="spinner" style="display: none;"></span>
+      </button>
     </form>
   </div>
 
-<script>
-  const form = document.getElementById("lunch-form");
-  const submitButton = document.querySelector("#lunch-form button");
-  const spinner = document.getElementById("spinner");
+  <script>
+    const form = document.getElementById("lunch-form");
+    const submitButton = document.querySelector("#lunch-form button");
+    const spinner = document.getElementById("spinner");
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
+    // Reset form state on page load
+    window.onload = () => {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      submitButton.disabled = false;
+      submitButton.firstChild.textContent = "Submit";
+      spinner.style.display = "none";
 
-    // Disable button and show spinner + text
-    submitButton.disabled = true;
-    submitButton.firstChild.textContent = "Submitting";
-    spinner.style.display = "inline-block";
+      // Prevent back-button resubmission issues
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+    };
 
-    const checkboxes = document.querySelectorAll('input[name="names"]:checked');
-    const names = Array.from(checkboxes).map(cb => cb.value);
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    const res = await fetch("/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ names })
+      // Disable button and show spinner
+      submitButton.disabled = true;
+      submitButton.firstChild.textContent = "Submitting";
+      spinner.style.display = "inline-block";
+
+      const checkboxes = document.querySelectorAll('input[name="names"]:checked');
+      const names = Array.from(checkboxes).map(cb => cb.value);
+
+      const res = await fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ names })
+      });
+
+      const data = await res.json();
+      localStorage.setItem("submissionResults", JSON.stringify(data));
+
+      // Redirect after submission
+      window.location.href = "/thanks";
     });
-
-    const data = await res.json();
-    localStorage.setItem("submissionResults", JSON.stringify(data));
-
-    // Redirect after submission
-    window.location.href = "/thanks";
-  });
-</script>
-
-
+  </script>
 </body>
 </html>
