@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 from datetime import datetime
-from pytz import timezone
+import pytz
 
-ist = timezone("Asia/Kolkata")
-now = datetime.now(ist)
+now_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+now_ist = now_utc.astimezone(pytz.timezone("Asia/Kolkata"))
+
 
 app = Flask(__name__)
 
@@ -53,8 +54,8 @@ def submit_lunch():
 
         now = datetime.now()
         payload = {
-            "date": now.strftime("%Y-%m-%d"),
-            "time": now.strftime("%H:%M:%S"),
+            "date": now_ist.strftime("%Y-%m-%d"),
+            "time": now_ist.strftime("%H:%M:%S"),
             "name": name,
             "emp_id": emp_id,
             "lunch": "Yes",
