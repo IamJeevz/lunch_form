@@ -52,7 +52,9 @@ def submit_lunch():
         except Exception as e:
             form_status = f"Form error: {e}"
 
-        now = datetime.now()
+        now = datetime.now
+         now_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+         now_ist = now_utc.astimezone(pytz.timezone("Asia/Kolkata"))
         payload = {
             "date": now_ist.strftime("%Y-%m-%d"),
             "time": now_ist.strftime("%H:%M:%S"),
