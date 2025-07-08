@@ -13,6 +13,7 @@ app = Flask(__name__)
 form_url = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdzpcp9FuxahnbdyBJMEZY6VNkieVAJoSJi_W8F5QDA2WWV2A/formResponse"
 webhook_url = "https://script.google.com/macros/s/AKfycbzkGyMtCEuJTDclad333-_mpbDkxORXsFcyVHcdJevikCplO6UtN7kGXvyViMdGnS_j/exec"
 
+
 # Users
 user_list = {
     "Jeevan Saju": "PTPL423",
@@ -43,7 +44,8 @@ def submit_lunch():
         form_data = {
             "entry.624210802": name,
             "entry.1158356341": emp_id,
-            "entry.769903343": "Yes"
+            "entry.769903343": "Yes",
+            "pageHistory": "0,1" 
         }
 
         try:
