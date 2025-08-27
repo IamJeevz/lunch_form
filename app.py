@@ -17,7 +17,8 @@ user_list = {
     "Sreejith Raghavan": "PTPL394",
     "Gleetas S": "PTPL430",
     "Sanjay Sajeevan": "PTPL453",
-    "Bilny Eldho": "PTPL384"
+    "Bilny Eldho": "PTPL384",
+	"Shahazin PS" : "NIL"
 }
 
 @app.route("/")
