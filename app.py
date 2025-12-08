@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import requests
 from datetime import datetime
 import pytz
+import os
 
 app = Flask(__name__)
 
@@ -99,4 +100,4 @@ def add_header(response):
     return response
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=True)      
